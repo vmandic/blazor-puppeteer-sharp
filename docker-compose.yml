@@ -1,0 +1,9 @@
+version: '3'
+services:
+  blazor-app:
+    image: blazor-puppeteer-sharp
+    ports: 
+      - "80:80"
+  tests:
+    image: blazor-puppeteer-sharp-test
+    depends_on: "blazor-app"
