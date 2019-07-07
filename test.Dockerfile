@@ -19,6 +19,7 @@ RUN apk update && apk upgrade && \
       harfbuzz@edge \
       ttf-freefont@edge
 RUN ["cp", "/usr/bin/chromium-browser", "/chromium-dl"]
+RUN ["cp", "-r", "/usr/lib/chromium", "/chromium-dl"]
 
 # Copy everything else and build
 FROM mcr.microsoft.com/dotnet/core/sdk:2.1 as run-step
@@ -26,4 +27,6 @@ WORKDIR /app
 ENV chromium_path=/app/chromium/chromium-browser 
 COPY --from=dl-chromium /chromium-dl /app/chromium
 COPY test/PuppeteerE2E/ ./
+RUN ["cp", "-r", "/app/chromium/chromium", "/app"]
+RUN ["rm", "-rf", "/app/chromium/chromium"]
 ENTRYPOINT ["dotnet", "test", "PuppeteerE2E.csproj"]
