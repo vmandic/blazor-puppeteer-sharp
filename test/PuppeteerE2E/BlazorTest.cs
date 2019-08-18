@@ -26,7 +26,8 @@ namespace PuppeteerE2E
 
       var opts = new LaunchOptions
       {
-        Headless = true
+        Headless = true,
+        Args = new string[] { "--no-sandbox" }
       };
 
       if (string.IsNullOrEmpty(chromium_path))
